@@ -1,0 +1,21 @@
+rating,review_count,name,categories/0/0,categories/0/1,categories/1/0,categories/1/1,location/city,location/display_address/0,location/display_address/1,location/postal_code,location/country_code,location/address/0,location/coordinate/latitude,location/coordinate/longitude,location/state_code
+4.5,126,Lampo,Italian,italian,Pizza,pizza,Charlottesville,205 Monticello Rd,"Charlottesville, VA 22902",22902,US,205 Monticello Rd,38.0273895,-78.4768372,VA
+4,125,Christian's Pizza,Pizza,pizza,,,Charlottesville,118 W Main St,"Charlottesville, VA 22902",22902,US,118 W Main St,38.0307388,-78.4822235,VA
+4,170,Mellow Mushroom,Pizza,pizza,Bars,bars,Charlottesville,1321 W Main St,"Charlottesville, VA 22903",22903,US,1321 W Main St,38.0336733,-78.4986327,VA
+4,22,Benny Delucas,Pizza,pizza,,,Charlottesville,913 W Main St,"Charlottesville, VA 22903",22903,US,913 W Main St,38.032738,-78.4944,VA
+4.5,32,Lelo's Pizza,Pizza,pizza,,,Charlottesville,1880 Abbey Rd,"Charlottesville, VA 22911",22911,US,1880 Abbey Rd,38.029584,-78.4441487,VA
+4,19,Fabios NY Pizza,Pizza,pizza,,,Charlottesville,1551 E High St,"Charlottesville, VA 22902",22902,US,1551 E High St,38.034065246582,-78.4608154296875,VA
+4,21,Anna's Ristorante & Pizzeria,Pizza,pizza,,,Charlottesville,115 Maury Ave,"Charlottesville, VA 22903",22903,US,115 Maury Ave,38.0266499,-78.5157,VA
+3,79,Brixx Wood Fired Pizza,Pizza,pizza,,,Charlottesville,1133 Emmet St N,"Charlottesville, VA 22903",22903,US,1133 Emmet St N,38.051880827683,-78.500547441832,VA
+3.5,23,Vita Nova Pizza & Pasta Bar,Pizza,pizza,Italian,italian,Charlottesville,310 East Main Street,"Charlottesville, VA 22902",22902,US,310 East Main Street,38.0298,-78.47976,VA
+3,39,Belmont Pizza & Pub,Pizza,pizza,Pubs,pubs,Charlottesville,221 Carlton Rd,Ste 10,22902,US,221 Carlton Rd,38.0238571166992,-78.4696426391602,VA
+4,20,Christian's Pizza,Pizza,pizza,,,Charlottesville,3440 Seminole Trl,Ste 108,22911,US,3440 Seminole Trl,38.1308097839355,-78.4376831054688,VA
+3.5,28,Christian's Pizza,Pizza,pizza,,,Charlottesville,100 14th St,"Charlottesville, VA 22903",22903,US,100 14th St,38.0340729,-78.4993896,VA
+3,107,Fry's Spring Station,Pizza,pizza,Italian,italian,Charlottesville,2115 Jefferson Park Ave,"Charlottesville, VA 22903",22903,US,2115 Jefferson Park Ave,38.0259499201006,-78.5141438773698,VA
+4,18,Vocelli Pizza,Italian,italian,Pizza,pizza,Charlottesville,1857 Seminole Trl,"Charlottesville, VA 22901",22901,US,1857 Seminole Trl,38.0869751,-78.4705505,VA
+3.5,20,Crozet Pizza at the Buddhist Biker Bar,Pizza,pizza,Cocktail Bars,cocktailbars,Charlottesville,20 Elliewood Ave,"Charlottesville, VA 22903",22903,US,20 Elliewood Ave,38.03661,-78.50042,VA
+3,13,Fabio's Ny Pizza #3,Pizza,pizza,Cheesesteaks,cheesesteaks,Charlottesville,900 Gardens Blvd,Ste 500,22901,US,900 Gardens Blvd,38.08465,-78.47078,VA
+4,36,Vinny's Italian Grill & Pizzeria,Pizza,pizza,Italian,italian,Charlottesville,Hollymeade Town Center,"241 Connor Dr, Unit L",22911,US,Hollymeade Town Center,38.126786,-78.4442588,VA
+4,5,Domino's Pizza,Pizza,pizza,Chicken Wings,chicken_wings,Charlottesville,508 Stewart St,"Charlottesville, VA 22902",22902,US,508 Stewart St,38.031406,-78.464699,VA
+4,4,Domino's Pizza,Pizza,pizza,Chicken Wings,chicken_wings,Charlottesville,1137 Millmont St,"Charlottesville, VA 22903",22903,US,1137 Millmont St,38.0536719811673,-78.502019856845,VA
+3.5,11,EndZone Pizza & Subs,Pizza,pizza,Sandwiches,sandwiches,Charlottesville,1764 Timberwood Blvd,"Charlottesville, VA 22911",22911,US,1764 Timberwood Blvd,38.1276229,-78.4371407,VA
