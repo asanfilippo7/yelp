@@ -1,1 +1,230 @@
-hello world
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Wahoo What to Eat Where</title>
+    
+    <style>
+        
+        .t h1 {
+            font-size: 40px;
+            font-family: 'Droid Sans', sans-serif;
+            color: "grey";
+            z-index:100;
+            margin-left:50px;
+            margin-bottom: 0em;
+        }
+
+        .t h2 {
+            font-size: 20px;
+            font-family: 'Droid Sans', sans-serif;
+            color: "grey";
+            z-index:100;
+            margin-left:50px;
+            margin-top:0;
+        }
+
+    </style>
+        
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+        var data; 
+        var food = 2;
+
+        // var filtering = false;
+        // var filter = [];
+
+        function setFood(v) {
+            food = v;
+            getData(food);
+        } 
+        
+        function getData(food) {
+            d3.selectAll("svg > *").remove();   // clear the SVG
+            d3.csv("wahoo_"+food+".csv", function(d) {
+                data = d;
+                draw();
+            });
+        }
+        
+        var baseline, meridian, hScale, vScale, rScale;     // declare some global variables
+        
+        var baseline = 500; //central y coordiante, 500 from the top
+        var meridian = 600; //central x coordiante, 1000 from the left
+        var rscale = 0.15; //scale the radius of the circles 
+
+        function draw() {
+            var target = d3.select("#cville");
+            var targetWidth = +target.attr("width");
+            
+            target.append("line")
+                .attr("class","university")
+                .attr("x1",537)
+                .attr("x2",663)
+                .attr("y1",477)
+                .attr("y2",523)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","main")
+                .attr("x1",895)
+                .attr("x2",663)
+                .attr("y1",590)
+                .attr("y2",523)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+             target.append("line")
+                .attr("class","emmet")
+                .attr("x1",518)
+                .attr("x2",780)
+                .attr("y1",510)
+                .attr("y2",30)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","jpa")
+                .attr("x1",518)
+                .attr("x2",400)
+                .attr("y1",510)
+                .attr("y2",670)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","monticello1")
+                .attr("x1",865)
+                .attr("x2",1030)
+                .attr("y1",580)
+                .attr("y2",680)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","monticello2")
+                .attr("x1",1050)
+                .attr("x2",1030)
+                .attr("y1",880)
+                .attr("y2",680)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","water")
+                .attr("x1",980)
+                .attr("x2",1170)
+                .attr("y1",610)
+                .attr("y2",700)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","ninth")
+                .attr("x1",990)
+                .attr("x2",1020)
+                .attr("y1",615)
+                .attr("y2",560)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("line")
+                .attr("class","high")
+                .attr("x1",1270)
+                .attr("x2",1020)
+                .attr("y1",545)
+                .attr("y2",560)
+                .attr("stroke","grey")
+                .attr("stroke-width",3)
+                .style("opacity",0.6);
+
+            target.append("rect")
+                .attr("class","lawn")
+                .attr("x",600)
+                .attr("y",500)
+                .attr("width",15)
+                .attr("height",25)
+                .style("fill","grey")
+                .style("opacity",0.6)
+                .attr('transform', 'translate(320,-230) rotate(30)');
+
+            target.append("rect")
+                .attr("class","dtmall")
+                .attr("x",910)
+                .attr("y",550)
+                .attr("width",90)
+                .attr("height",50)
+                .style("fill","grey")
+                .style("opacity",0.6)
+                .attr('transform', 'translate(100,-150) rotate(10)') 
+
+            target.append("rect")
+                .attr("class","pantops")
+                .attr("x",1270)
+                .attr("y",560)
+                .attr("width",70)
+                .attr("height",50)
+                .style("fill","grey")
+                .style("opacity",0.6)
+                .attr('transform', 'translate(-100,240) rotate(-10)')            
+
+            target.append("circle")
+                .attr("class","rotunda")
+                .attr("cx",meridian)
+                .attr("cy",baseline)
+                .attr("r",10)
+                .style("fill","grey")
+                .style("opacity",0.6);
+
+            target.selectAll("circle.restaurant").data(data).enter().append("circle")
+                    .attr("class", function(d) {
+                        return "restaurant";
+                        })
+                    .attr("cx",function(d) {
+                            return meridian + (15600*(+d["location/coordinate/longitude"] - (-78.5034395)));
+                        })
+                    .attr("cy",function(d) {
+                            return baseline - (15600*(+d["location/coordinate/latitude"] - 38.03561));
+                        })
+                    .attr("r",function(d) {
+                        if(+d["review_count"] > 300) {
+                            return 30;
+                        }
+                        return (+d["review_count"] * rscale);
+                        })
+                    .style("fill","#000000")
+                    .style("stroke","white")
+                    .style("opacity",0.6)
+                    .append("title").text(function(d) {
+                        return d["name"];
+                    });
+
+        }
+        
+    </script>
+    
+</head>
+<body onload="getData(2)">
+
+    <div class="t">
+        <h1>Wahoo-What to Eat Where</h1>
+        <h2>The best Charlottesville restaurants for whatever you're craving.</h2>
+    </div>
+
+    <svg id="cville" width="1900" height="900" style="margin-top:-85px;"></svg>
+
+</body>
+</html>
