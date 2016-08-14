@@ -42,6 +42,26 @@
             margin-bottom: 0.2em;
         }
 
+        .s ul {
+            list-style: none;
+            text-align: left;
+            font-family: 'Roboto',sans-serif;
+        }
+
+        .s ul li {
+            margin-bottom: 0.5em; 
+        }
+
+        .s ul li button {
+            color: transparent;
+            box-shadow: none;
+            background-color: #000000;
+        }
+
+        .s ul li button.clicked {
+            color: #ffffff;
+        }
+
         .s select {
             ffont-family: 'Roboto', sans-serif;
             font-size: 20px;
@@ -50,8 +70,8 @@
         .i {
             position: absolute;
             z-index: 250;
-            margin-left: 860px;
-            margin-top: 90px;
+            margin-left: 900px;
+            margin-top: 190px;
             width: 680px;
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
@@ -100,18 +120,77 @@
             margin-left: 50px;
         }
 
+        .h {
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            width: 590px;
+            float: right;
+            z-index: 100;
+            margin-top: -150px;
+            margin-right: 90px;
+            background-color: rgba(0, 0, 51, 0.1);
+            color: #333333;
+            padding: 1em;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
+        }
+
+        .rating {
+            font-family: 'Roboto', sans-serif;
+            margin-top: 125px;
+            width: 550px;
+            margin-left: 90px;
+        }
+
+        .rating h2 {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .rating p {
+            font-size: 16px;
+        }
+
+        .heatmap {
+            margin-top: -400px;
+            margin-right: 40px;
+            float:right;
+        }
+
+        .heatmap ul {
+            list-style: none;
+            margin-left:5em;
+        }
+
+        .heatmap ul li {
+            display: inline;
+            float:left;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-right: 15em;
+            font-style: italic;
+        }
+
+        .heatmap ul li:last-child {
+            margin-right: 0em;
+        }
+
     </style>
         
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="tooltip.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,400italic,100italic,700,700italic' rel='stylesheet' type='text/css'>
     <!-- <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'> -->
 
     <script type="text/javascript">
 
         var data; 
-        var food = 1;
+        var food = 0;
+
+        var filtering = false;
+        var filter = [];
 
         // var filtering = false;
         // var filter = [];
@@ -123,7 +202,7 @@
         
         function getData(food) {
             d3.selectAll("svg > *").remove();   // clear the SVG
-            d3.csv("wahoo_"+food+".csv", function(d) {
+            d3.csv("yelp_"+food+".csv", function(d) {
                 data = d;
                 draw();
             });
@@ -133,7 +212,7 @@
         
         var baseline = 500; //central y coordiante, 500 from the top
         var meridian = 600; //central x coordiante, 1000 from the left
-        var rscale = 0.10; //scale the radius of the circles 
+        var rscale = 0.1; //scale the radius of the circles 
 
         function draw() {
 
@@ -142,22 +221,22 @@
               .attr('class', 'd3-tip')
               .offset([-10, 0])
               .html(function(d) {
-                return "<strong>" + d["name"] + "</strong> <br> <i>Rating: <span style='color:" + colorScale(+d["rating"]) + "'>" + d['rating'] + "</span></i> <br>" + d["location/address/0"];
+                return "<strong>" + d["name"] + "</strong> (" + d["categories/0/0"] + ") <br> <i>Rating: <span style='color:" + colorScale(+d["rating"]) + "'>" + d['rating'] + "</span></i> <br>" + d["location/display_address/0"];
             })
 
             //Array of insights about the different food categories. To be pumped into the i paragraph
-            var foodInsights = [
-                "When it comes to burgers, the Charlottesville food scene seems to have settled for mediocrity&#8212perhaps without reason. Sure, you can grab a patty downtown at <strong>Citizen Burger</strong> or <strong>The Whiskey Jar</strong>, both of which hold 250-plus Yelp reviews and respectable 4 star ratings. And when those 2 a.m. cravings (read: drunchies) hit, Corner classic <strong>The White Spot</strong> will always satisfy with 3.5 star Double Gus. <br><br>But for those looking for something a cut above, Charlottesville appears to offer a few sleeper hits that just might beat out its big stars. Take <strong>Riverside</strong>, a 4.5-star burger establishment near Pantops that is often overlooked by students. To get even more adventurous with the local burger scene, head South on Monticello to <strong>Moose's by the Creek</strong>. With only 56 reviews but an average 4.5-star rating, Moose's could quickly go from hidden gem to the Ville's next hot restaurant.",
-                "If a great pizza pie is your <i>amore</i>, then you may be a bit out of luck here: Charlottesville just isn't a great pizza town. The most-rated parlor here, the Corner's 4-star <strong>Mellow Mushroom</strong>, only boasts 170 reviews&#8212evidencing a lack of enthusiasm for the Italian classic. <strong>Christian's Pizza</strong> on the Downtown Mall can also boast 125 reviews and 4 stars. However, it's buy-by-the-slice model doesn't appeal to everyone, and only those with lucky timing can expect a fresh pie. <br><br>That being said, there are other respectable options to get your pizza fix in Charlottesville. For something that's relatively tried and true, head East on Water Street to <strong>Lampo</strong>. With 127 Yelp reviews and a 4.5-star rating, this pizzeria serves up Neapolitan-style pies that should make any thin-crust lover's heart flutter. If that's not enough, those pizza pioneers who venture East of Pantops may be heavily rewarded at <strong>Lelo's Pizza</strong>. With only 32 reviews, Lelo's 4.5-star consensus rating is impressive&#8212if not an early fluke."
-            ];
+            // var foodInsights = [
+            //     "When it comes to burgers, the Charlottesville food scene seems to have settled for mediocrity&#8212perhaps without reason. Sure, you can grab a patty downtown at <strong>Citizen Burger</strong> or <strong>The Whiskey Jar</strong>, both of which hold 250-plus Yelp reviews and respectable 4 star ratings. And when those 2 a.m. cravings (read: drunchies) hit, Corner classic <strong>The White Spot</strong> will always satisfy with 3.5 star Double Gus. <br><br>But for those looking for something a cut above, Charlottesville appears to offer a few sleeper hits that just might beat out its big stars. Take <strong>Riverside</strong>, a 4.5-star burger establishment near Pantops that is often overlooked by students. To get even more adventurous with the local burger scene, head South on Monticello to <strong>Moose's by the Creek</strong>. With only 56 reviews but an average 4.5-star rating, Moose's could quickly go from hidden gem to the Ville's next hot restaurant.",
+            //     "If a great pizza pie is your <i>amore</i>, then you may be a bit out of luck here: Charlottesville just isn't an awesome pizza town. The most-rated parlor here, the Corner's 4-star <strong>Mellow Mushroom</strong>, only boasts 170 reviews&#8212evidencing a lack of enthusiasm for the Italian classic. <strong>Christian's Pizza</strong> on the Downtown Mall can also boast 125 reviews and 4 stars. However, it's buy-by-the-slice model doesn't appeal to everyone, and only those with lucky timing can expect a fresh pie. <br><br>That being said, there are other respectable options to get your pizza fix in Charlottesville. For something that's relatively tried and true, head East on Water Street to <strong>Lampo</strong>. With 127 Yelp reviews and a 4.5-star rating, this pizzeria serves up Neapolitan-style pies that should make any thin-crust lover's heart flutter. If that's not enough, those pizza pioneers who venture East of Pantops may be heavily rewarded at <strong>Lelo's Pizza</strong>. With only 32 reviews, Lelo's 4.5-star consensus rating is impressive&#8212if not an early fluke."
+            // ];
 
             //Pump insights into i paragraph when food item changes
-            d3.select(".i p").html(foodInsights[(food - 1)]);
+            // d3.select(".i p").html(foodInsights[(food - 1)]);
 
             //Create the color scale using ratings
             var minRating = d3.min(data, function(d) { return +d["rating"]});
             var maxRating = d3.max(data, function(d) { return +d["rating"]});
-            var colorScale = d3.scale.linear().domain([minRating, maxRating]).range(['#ffe0cc', '#e65c00']);
+            var colorScale = d3.scale.linear().domain([minRating, maxRating]).range(['#ffffff', '#e65c00']);
 
             var target = d3.select("#cville");
             var targetWidth = +target.attr("width");
@@ -388,21 +467,18 @@
                 .style("opacity",0.6);           
 
             //Draw the Rotunda
-            target.append("circle")
-                .attr("class","rotunda")
-                .attr("cx",meridian)
-                .attr("cy",baseline)
-                .attr("r",10)
-                .style("fill","#000033")
-                .style("opacity",0.4);
+            // target.append("circle")
+            //     .attr("class","rotunda")
+            //     .attr("cx",meridian)
+            //     .attr("cy",baseline)
+            //     .attr("r",10)
+            //     .style("fill","#000033")
+            //     .style("opacity",0.4);
 
             //Call the tooltips
             target.call(tip);
 
-            target.selectAll("circle.restaurant").data(data).enter().append("circle")
-                    .attr("class", function(d) {
-                        return "restaurant";
-                        })
+            target.selectAll("circle").data(data).enter().append("circle")
                     .attr("cx",function(d) {
                             return meridian + (15600*(+d["location/coordinate/longitude"] - (-78.5034395)));
                         })
@@ -417,7 +493,7 @@
                         })
                     .style("fill","#000000")
                     .style("stroke","white")
-                    .style("opacity",0.8)
+                    .style("opacity",0.85)
                     .style("fill", function(d) { return colorScale(+d["rating"]); }) //Color the circles according to rating
                     // .append("title").text(function(d) {
                     //     return d["name"];
@@ -425,34 +501,160 @@
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide);
 
+            target.selectAll("circle").attr("class", function(d) {
+                var cuisine =  "";
+                        if(d["categories/0/0"] === "Italian") {
+                            cuisine = "italian";
+                        }
+                        if(d["categories/0/0"] === "American (New)") {
+                            cuisine = "american";   
+                        }
+                        if(d["categories/0/0"] === "Barbeque") {
+                            cuisine = "barbeque";   
+                        }
+                        if(d["categories/0/0"] === "Mediterranean") {
+                            cuisine = "med";
+                        }
+                        if(d["categories/0/0"] === "Middle East") {
+                            cuisine = "me";
+                        }
+                        if(d["categories/0/0"] === "Indian") {
+                           cuisine = "indian"; 
+                        }
+                        if(d["categories/0/0"] === "Mexican") {
+                           cuisine = "mexican"; 
+                        }
+                        if(d["categories/0/0"] === "Thai") {
+                           cuisine = "thai";
+                        }
+                        if(d["categories/0/0"] === "Chinese") {
+                            cuisine = "chinese";
+                        }
+                        if(d["categories/0/0"] === "Japanese") {
+                            cuisine = "japanese";
+                        }
+                        return cuisine;
+                    });
+
         }
+
+        // When the user selects or removes a filter term, add or remove it from the list of current filters
+            function pushFilter(element,term) {
+                var e = d3.select(element)[0][0];
+                if(e.className) {
+                    d3.select(element).attr("class","").text("H");
+                    var ind = filter.indexOf(term);
+                    filter.splice(ind,1);
+                }
+                else {
+                    d3.select(element).attr("class","clicked").text("X");
+                    filter.push(term);
+                }
+                filterCriteria();
+            }
+
+            function filterCriteria() {
+                if(filter.length > 0) {
+                   filtering = true;
+                   d3.selectAll("circle").style("visibility","hidden");
+                    for(var i = 0; i < filter.length; i++) {
+                        var c = "circle." + filter[i];
+                        d3.selectAll(c).style("visibility","visible");
+                    } 
+                }
+                else {
+                    filtering = false;
+                    getData(food);
+                }
+            }
+
+            function getRated(r) {
+                var colorString = '';
+                if(r === 2.5) {
+                    colorString = "rgb(255, 255, 255)"
+                }
+                else if(r === 3) {
+                    colorString = "rgb(250, 222, 204)"
+                }
+                else if(r === 3.5) {
+                    colorString = "rgb(245, 190, 153)"
+                }
+                else if(r === 4) {
+                    colorString = "rgb(240, 157, 102)"
+                }
+                else if(r === 4.5) {
+                    colorString = "rgb(235, 125, 51)"
+                }
+                console.log(colorString);
+                d3.selectAll("circle").style("opacity",0.05);
+                d3.selectAll("circle").select(function() {
+                    if(this.style.fill === colorString) {
+                        d3.select(this).style("opacity",1.0).style("stroke","orange");
+                    }
+                });
+            }
         
     </script>
     
 </head>
-<body onload="getData(1)">
+<body onload="getData(0)">
 
     <div class="t">
         <h1>Wahoo-What to Eat Where</h1>
-        <h2>The best Charlottesville restaurants for whatever you're craving.</h2>
+        <h2>Mapping the best of Charlottesville's food scene.</h2>
     </div>
 
+    <!-- <div class="r">
+        <h2>Filter by rating...</h2>
+        <ul>
+            <li><button onClick="getRated(2.5)">2.5 stars</button></li>
+            <li><button onClick="getRated(3)">3 stars</button></li>
+            <li><button onClick="getRated(3.5)">3.5 stars</button></li>
+            <li><button onClick="getRated(4)">4 stars</button></li>
+            <li><button onClick="getRated(4.5)">4.5 stars</button></li>
+        </ul>
+    </div>
+ -->
     <div class="s">
         <h2>I'm craving...</h2>
-        <select style="position: absolute; z-index:300; margin-left: -90px;" onChange="setFood(this.value)">
-            <option value="1" selected>Burgers</option>
-            <option value="2">Pizza</option>
-        </select>
+        <ul>
+                    <li><button onClick="pushFilter(this,'italian')" style="opacity:0.6;">H</button> Italian</li>
+                    <li><button onClick="pushFilter(this,'american')" style="opacity:0.6;">H</button> American</li>
+                    <li><button onClick="pushFilter(this,'barbeque')" style="opacity:0.6;">H</button> Barbeque</li>
+                    <li><button onClick="pushFilter(this,'med')" style="opacity:0.6;">H</button> Mediterranean</li>
+                    <li><button onClick="pushFilter(this,'me')" style="opacity:0.6;">H</button> Middle Eastern</li>
+                    <li><button onClick="pushFilter(this,'indian')" style="opacity:0.6;">H</button> Indian</li>
+                    <li><button onClick="pushFilter(this,'mexican')" style="opacity:0.6;">H</button> Mexican</li>
+                    <li><button onClick="pushFilter(this,'thai')" style="opacity:0.6;">H</button> Thai</li>
+                    <li><button onClick="pushFilter(this,'chinese')" style="opacity:0.6;">H</button> Chinese</li>
+                    <li><button onClick="pushFilter(this,'japanese')" style="opacity:0.6;">H</button> Japanese</li>
+                </ul> 
     </div>
 
     <div class="i">
-        <p></p>
+        <p>Boasting over 300 restaurants to feed its 44,000 residents, the city of Charlottesville could well be considered a foodie oasis&#8212albeit an oft-overlooked one. With so many delicious options, deciding where to grab a bite to eat can lead to choice paralysis&#8212especially for those new UVA students who have yet to venture far from Grounds. Using data from the Yelp api, this interactive visual aims to help culinary-minded C-Villians find the perfect spot for whatever they're craving.</p>
+        <p>The first locale that comes to mind for a meal in Charlottesville is, of course, <strong>the Downtown Mall</strong>&#8212and for classic, crowd-pleasing cuisines like American, Barbeque, and Italian, this area certainly shines. Yet despite its popularity, the Mall is not the epicenter of every cusine type. The hottest Mexican food, for example, can be found on the periphery of Downtown, in <strong>Belmont</strong> and out east near <strong>Pantops</strong>. And if you're craving Indian or Mediterranean spice, be advised that heading North on <strong>Emmet St./Route 29</strong> will provide the best options.</p>
     </div>
 
-    <svg id="cville" width="1900" height="900" style="margin-top:-85px;"></svg>
+    <svg id="cville" width="1900" height="900" style="margin-top:-250px;"></svg>
 
     <div class="scale">
         <img src="legend.PNG" />
+    </div>
+
+    <div class="h">
+        <p><strong>How to read this graphic: </strong>Each circle on the map represents an individual restaurant. The color of the circle represents it's Yelp rating from one to five stars, with the darkest circles being the highest-rated. The size of each circle represents the number of Yelp reviews that restaurant has received (a rough indicator of the restuarant's noteriety). Mouse over any circle to see the restaurant's name, location, and cuisine type. Viewers can also filter for one or more cuisine types using the "I'm craving..." buttons at top right.</p>
+    </div>
+
+    <div class="rating">
+        <h2>Where to be for the best eats</h2>
+        <p>In addition to searching for restaurant clusters by cuisine type, the curious foodie might want to know: where do the best and worst restaurants in Charlottesville reside? By filtering the restaurants in this dataset by star rating (3, 3.5, 4, and 4.5 stars) and plotting each rating's set individually, one can see the distribution of mediocre, good, and great restuarants across Charlottesville's neighborhoods.</p>
+        <p>A key takeaway here is that&#8212spoiler alert&#8212there are both outstanding and underwhelming restaurants on the Downtown Mall. Mall-goers would thus do well to stick to cuisines that are done best Downtown (see above), like classic American. Outside of the Downtown Mall, restuarants with 3, 3.5 and 4 star ratings tend to cluster along a vertical axis made up of JPA, Emmet St. and Route 29. It's best to avoid the JPA end of this trail, where the most mediocre 3-star restaurants cluster. As one might expect, pedestrian but relatively high-quality 3.5 star joints cluster at the upscale Barracks shopping center. Those looking for a step up need only travel a bit further down Route 29 to find a plethora of 4-star ethinc eats near Stonefield shopping center. Yet at the end of the day, all roads lead back to Downtown: the top-rated 4.5 star restaurants are almost unilaterally distributed in the near vicinity of this area.</p>
+    </div>
+
+    <div class="heatmap">
+        <img src="heatmap.png" style="width:1175px; height:auto;"></img>
+        <p><ul><li>3 stars</li><li>3.5 stars</li><li>4 stars</li><li>4.5 stars</li></ul></p>
     </div>
 
 </body>
