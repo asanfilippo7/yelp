@@ -6,9 +6,12 @@
     
     <style>
         
+        .placeholder {
+            color: transparent;
+        }
+
         .t {
-            z-index:100;
-            margin-left:50px;
+           
         }
 
         .t h1 {
@@ -27,52 +30,16 @@
             color: #333333;
         }
 
-        .s {
-            float:right;
-            margin-right: 50px;
-            margin-top: -75px;
-            text-align: right;
-            z-index:200;
-            color: #333333;
-        }
-
-        .s h2 {
-            font-family: 'Roboto', sans-serif;
-            font-size: 30px;
-            margin-bottom: 0.2em;
-        }
-
-        .s ul {
-            list-style: none;
-            text-align: left;
-            font-family: 'Roboto',sans-serif;
-        }
-
-        .s ul li {
-            margin-bottom: 0.5em; 
-        }
-
-        .s ul li button {
-            color: transparent;
-            box-shadow: none;
-            background-color: #000000;
-        }
-
-        .s ul li button.clicked {
-            color: #ffffff;
-        }
-
-        .s select {
-            ffont-family: 'Roboto', sans-serif;
-            font-size: 20px;
+        .ttb {
+            margin-top: -800px;
         }
 
         .i {
-            position: absolute;
-            z-index: 250;
-            margin-left: 900px;
-            margin-top: 190px;
-            width: 680px;
+            /*position: absolute;
+            z-index: 250;*/
+            /*margin-left: 900px;
+            margin-top: 190px;*/
+           /* width: 680px;*/
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
             color: #333333;
@@ -113,21 +80,9 @@
           left: 0;
         }
 
-        .scale {
-            position: absolute;
-            z-index: 100;
-            margin-top: -180px;
-            margin-left: 50px;
-        }
-
         .h {
             font-size: 16px;
             font-family: 'Roboto', sans-serif;
-            width: 590px;
-            float: right;
-            z-index: 100;
-            margin-top: -150px;
-            margin-right: 90px;
             background-color: rgba(0, 0, 51, 0.1);
             color: #333333;
             padding: 1em;
@@ -135,45 +90,98 @@
             padding-right: 1.5em;
         }
 
-        .rating {
-            font-family: 'Roboto', sans-serif;
-            margin-top: 125px;
-            width: 550px;
-            margin-left: 90px;
+        .scale {
+             
         }
 
-        .rating h2 {
+        .legend {
+            f/*loat:right;*/
+        }
+
+        .selectors {
+            color: #333333;
+            text-align:right;
+        }
+
+        .selectors h2 {
+            font-size: 25px;
+            margin-top: 0em;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .selectors ul {
+            list-style: none;
+            padding-left: 0em;
+        }
+
+        .selectors ul li {
+            margin-bottom: 0.5em; 
+        }
+
+        .selectors ul li button {
+            color: transparent;
+            box-shadow: none;
+            background-color: #000000;
+        }
+
+        .selectors ul li button.clicked {
+            color: #ffffff;
+        }
+
+        .ratings {
+            font-family: 'Roboto', sans-serif;
+            margin-top: 3em;
+        }
+
+        .rating-header h2 {
             font-weight: 700;
             font-size: 20px;
         }
 
-        .rating p {
+        .rating-text p {
             font-size: 16px;
         }
 
-        .heatmap {
-            margin-top: -400px;
-            margin-right: 40px;
-            float:right;
+        .heatmaps {
+            
         }
 
-        .heatmap ul {
-            list-style: none;
-            margin-left:5em;
-        }
-
-        .heatmap ul li {
-            display: inline;
-            float:left;
+        .heatmaps p {
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
             font-weight: 700;
             margin-right: 15em;
             font-style: italic;
+            text-align: center;
         }
 
-        .heatmap ul li:last-child {
-            margin-right: 0em;
+        @media screen and (max-width: 1199px) {
+            .i {
+                font-size: 13px;
+            }
+        }
+
+        @media screen and (max-width: 991px) {
+            .ttb {
+                margin-top: 0px;
+                margin-bottom: 30px;
+            }
+            .i {
+                font-size: 16px;
+            }
+            .h {
+                margin-bottom: 30px;
+            }
+        }
+
+        @media screen and (max-width:767px) {
+            .selectors {
+                text-align: left;
+            }
+            .selectors ul li {
+                display: inline;
+                margin-right: 1em;
+            }
         }
 
     </style>
@@ -181,6 +189,7 @@
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="tooltip.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,400italic,100italic,700,700italic' rel='stylesheet' type='text/css'>
     <!-- <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'> -->
 
@@ -599,63 +608,117 @@
 </head>
 <body onload="getData(0)">
 
-    <div class="t">
-        <h1>Wahoo-What to Eat Where</h1>
-        <h2>Mapping the best of Charlottesville's food scene.</h2>
+<!-- container for the title block -->
+<div class="container-fluid">
+    <div class="container">
+        <!-- <div class="row"> -->
+            <div class="t">
+                <h1>Wahoo-What to Eat Where</h1>
+                <h2>Mapping the best of Charlottesville's food scene.</h2>
+            </div>
+        <!-- </div> -->
     </div>
+</div>
 
-    <!-- <div class="r">
-        <h2>Filter by rating...</h2>
-        <ul>
-            <li><button onClick="getRated(2.5)">2.5 stars</button></li>
-            <li><button onClick="getRated(3)">3 stars</button></li>
-            <li><button onClick="getRated(3.5)">3.5 stars</button></li>
-            <li><button onClick="getRated(4)">4 stars</button></li>
-            <li><button onClick="getRated(4.5)">4.5 stars</button></li>
-        </ul>
+<!-- container for the SVG -->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 svgme">
+                <svg id="cville" width="1500" height="900" style="margin-left:-350px; margin-top:80px;"></svg>
+            </div>
+        </div>
     </div>
- -->
-    <div class="s">
-        <h2>I'm craving...</h2>
-        <ul>
-                    <li><button onClick="pushFilter(this,'italian')" style="opacity:0.6;">H</button> Italian</li>
-                    <li><button onClick="pushFilter(this,'american')" style="opacity:0.6;">H</button> American</li>
-                    <li><button onClick="pushFilter(this,'barbeque')" style="opacity:0.6;">H</button> Barbeque</li>
-                    <li><button onClick="pushFilter(this,'med')" style="opacity:0.6;">H</button> Mediterranean</li>
-                    <li><button onClick="pushFilter(this,'me')" style="opacity:0.6;">H</button> Middle Eastern</li>
-                    <li><button onClick="pushFilter(this,'indian')" style="opacity:0.6;">H</button> Indian</li>
-                    <li><button onClick="pushFilter(this,'mexican')" style="opacity:0.6;">H</button> Mexican</li>
-                    <li><button onClick="pushFilter(this,'thai')" style="opacity:0.6;">H</button> Thai</li>
-                    <li><button onClick="pushFilter(this,'chinese')" style="opacity:0.6;">H</button> Chinese</li>
-                    <li><button onClick="pushFilter(this,'japanese')" style="opacity:0.6;">H</button> Japanese</li>
-                </ul> 
-    </div>
+</div>
 
-    <div class="i">
-        <p>Boasting over 300 restaurants to feed its 44,000 residents, the city of Charlottesville could well be considered a foodie oasis&#8212albeit an oft-overlooked one. With so many delicious options, deciding where to grab a bite to eat can lead to choice paralysis&#8212especially for those new UVA students who have yet to venture far from Grounds. Using data from the Yelp api, this interactive visual aims to help culinary-minded C-Villians find the perfect spot for whatever they're craving.</p>
-        <p>The first locale that comes to mind for a meal in Charlottesville is, of course, <strong>the Downtown Mall</strong>&#8212and for classic, crowd-pleasing cuisines like American, Barbeque, and Italian, this area certainly shines. Yet despite its popularity, the Mall is not the epicenter of every cusine type. The hottest Mexican food, for example, can be found on the periphery of Downtown, in <strong>Belmont</strong> and out east near <strong>Pantops</strong>. And if you're craving Indian or Mediterranean spice, be advised that heading North on <strong>Emmet St./Route 29</strong> will provide the best options.</p>
+<!-- container for the top text block, overlaying the SVG at full screen width -->
+<div class="container-fluid">
+    <div class="container ttb">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 placeholder">
+                <p>Placeholder here yay!</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 i">
+                <p>Boasting over 300 restaurants to feed its 44,000 residents, the city of Charlottesville could well be considered a foodie oasis&#8212albeit an oft-overlooked one. With so many delicious options, deciding where to grab a bite to eat can lead to choice paralysis&#8212especially for those new UVA students who have yet to venture far from Grounds. Using data from the Yelp api, this interactive visual aims to help culinary-minded C-Villians find the perfect spot for whatever they're craving.</p>
+                <p>The first locale that comes to mind for a meal in Charlottesville is, of course, <strong>the Downtown Mall</strong>&#8212and for classic, crowd-pleasing cuisines like American, Barbeque, and Italian, this area certainly shines. Yet despite its popularity, the Mall is not the epicenter of every cusine type. The hottest Mexican food, for example, can be found on the periphery of Downtown, in <strong>Belmont</strong> and out east near <strong>Pantops</strong>. And if you're craving Indian or Mediterranean spice, be advised that heading North on <strong>Emmet St./Route 29</strong> will provide the best options.</p>
+            </div>
+            
+        </div>
     </div>
+</div>
 
-    <svg id="cville" width="1900" height="900" style="margin-top:-250px;"></svg>
-
-    <div class="scale">
-        <img src="legend.PNG" />
+<!-- container for "how to read" and legend/filters -->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 h">
+                <p><strong>How to read this graphic: </strong>Each circle on the map represents an individual restaurant. The color of the circle represents its Yelp rating from one to five stars, with the darkest circles being the highest-rated. The size of each circle represents the number of Yelp reviews that restaurant has received (a rough indicator of the restaurant's noteriety). Mouse over any circle to see the restaurant's name, location, and cuisine type. Viewers can also filter for one or more cuisine types using the "I'm craving..." buttons.</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 scale">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 selectors">
+                    <h2>I'm craving...</h2>
+                    <ul>
+                        <li>Italian <button onClick="pushFilter(this,'italian')" style="opacity:0.6;">H</button></li>
+                        <li>American<button onClick="pushFilter(this,'american')" style="opacity:0.6;">H</button></li>
+                        <li>Barbeque<button onClick="pushFilter(this,'barbeque')" style="opacity:0.6;">H</button></li>
+                        <li>Mediterranean<button onClick="pushFilter(this,'med')" style="opacity:0.6;">H</button></li>
+                        <li>Middle Eastern<button onClick="pushFilter(this,'me')" style="opacity:0.6;">H</button></li>
+                        <li>Indian<button onClick="pushFilter(this,'indian')" style="opacity:0.6;">H</button></li>
+                        <li>Mexican<button onClick="pushFilter(this,'mexican')" style="opacity:0.6;">H</button></li>
+                        <li>Thai<button onClick="pushFilter(this,'thai')" style="opacity:0.6;">H</button></li>
+                        <li>Chinese<button onClick="pushFilter(this,'chinese')" style="opacity:0.6;">H</button></li>
+                        <li>Japanese<button onClick="pushFilter(this,'japanese')" style="opacity:0.6;">H</button></li>
+                    </ul> 
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 legend">
+                    <img src="legend.PNG" />
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="h">
-        <p><strong>How to read this graphic: </strong>Each circle on the map represents an individual restaurant. The color of the circle represents its Yelp rating from one to five stars, with the darkest circles being the highest-rated. The size of each circle represents the number of Yelp reviews that restaurant has received (a rough indicator of the restaurant's noteriety). Mouse over any circle to see the restaurant's name, location, and cuisine type. Viewers can also filter for one or more cuisine types using the "I'm craving..." buttons at top right.</p>
+<!-- container for the heatmap section -->
+<div class="container-fluid">
+    <div class="container ratings">
+        <div class="row">
+            <div class="col-md-12 rating-header">
+                <h2>Questions of quality</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 rating-text">
+                <p>In addition to searching for restaurant clusters by cuisine type, the curious foodie might want to know: where do the best and worst restaurants in Charlottesville reside? By filtering the restaurants in this dataset by star rating (3, 3.5, 4, and 4.5 stars) and plotting each rating's set individually, one can see the distribution of mediocre, good, and great restuarants across Charlottesville's neighborhoods.</p>
+                <p>A key takeaway here is that&#8212spoiler alert&#8212there are both outstanding and underwhelming restaurants on the <strong>Downtown Mall</strong>. Mall-goers would thus do well to stick to cuisines that are done best Downtown (see above), like classic American. Outside of the Downtown Mall, restuarants with 3, 3.5 and 4 star ratings tend to cluster along a vertical axis made up of JPA, Emmet St. and Route 29. It's best to avoid the <strong>JPA</strong> end of this trail, where the most mediocre 3-star restaurants cluster. As one might expect, pedestrian but relatively high-quality 3.5 star joints cluster at the upscale <strong>Barracks</strong> shopping center. Those looking for a step up need only travel a bit further down Route 29 to find a plethora of 4-star ethinc eats near <strong>Stonefield</strong> shopping center. At the end of the day, though, all roads lead back to Downtown: C-Ville's top-rated 4.5 star restaurants are almost unilaterally distributed in the near vicinity of this area.</p>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 heatmaps">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <img src="heatmap0.PNG" style="width:100%; height:auto;"></img>
+                        <p>3 stars</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <img src="heatmap1.PNG" style="width:100%; height:auto;"></img>
+                        <p>3.5 stars</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <img src="heatmap2.PNG" style="width:100%; height:auto;"></img>
+                        <p>4 stars</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <img src="heatmap3.PNG" style="width:100%; height:auto;"></img>
+                        <p>4.5 stars</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="rating">
-        <h2>Questions of quality</h2>
-        <p>In addition to searching for restaurant clusters by cuisine type, the curious foodie might want to know: where do the best and worst restaurants in Charlottesville reside? By filtering the restaurants in this dataset by star rating (3, 3.5, 4, and 4.5 stars) and plotting each rating's set individually, one can see the distribution of mediocre, good, and great restuarants across Charlottesville's neighborhoods.</p>
-        <p>A key takeaway here is that&#8212spoiler alert&#8212there are both outstanding and underwhelming restaurants on the Downtown Mall. Mall-goers would thus do well to stick to cuisines that are done best Downtown (see above), like classic American. Outside of the Downtown Mall, restuarants with 3, 3.5 and 4 star ratings tend to cluster along a vertical axis made up of JPA, Emmet St. and Route 29. It's best to avoid the JPA end of this trail, where the most mediocre 3-star restaurants cluster. As one might expect, pedestrian but relatively high-quality 3.5 star joints cluster at the upscale Barracks shopping center. Those looking for a step up need only travel a bit further down Route 29 to find a plethora of 4-star ethinc eats near Stonefield shopping center. At the end of the day, though, all roads lead back to Downtown: C-Ville's top-rated 4.5 star restaurants are almost unilaterally distributed in the near vicinity of this area.</p>
-    </div>
-
-    <div class="heatmap">
-        <img src="heatmap.PNG" style="width:1175px; height:auto;"></img>
-        <p><ul><li>3 stars</li><li>3.5 stars</li><li>4 stars</li><li>4.5 stars</li></ul></p>
-    </div>
+</div>
 
 </body>
 </html>
+
+
+    
